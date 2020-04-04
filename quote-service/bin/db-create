@@ -1,0 +1,10 @@
+#!/bin/sh -eu
+
+for DB in quote quote_test; do
+    dropdb "$DB" || true
+    createuser -S -d -R "$DB" || true
+    createdb "$DB"
+    echo "alter user $DB with SUPERUSER;" | psql "$DB"
+    echo "alter user $DB with encrypted password '$DB';" | psql "$DB"
+    echo "grant all privileges on database $DB to $DB;" | psql "$DB"
+done

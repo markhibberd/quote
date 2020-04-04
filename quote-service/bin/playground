@@ -1,0 +1,14 @@
+#!/bin/sh -eu
+
+echo curl "http://localhost:8000"
+
+echo time curl  "http://localhost:8000/user" -d '{
+  "email": "test2@example.com",
+  "password": "12345678"
+}'
+
+
+time curl  "http://localhost:8000/session" -d '{
+  "email": "test2@example.com",
+  "password": "12345678"
+}'

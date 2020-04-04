@@ -1,0 +1,11 @@
+#/bin/sh -eu
+
+if [ $# -ne 1 ]; then
+    echo >&2  "usage:"
+    echo >&2  "    db-new-migration MIGRATION_NAME"
+    echo >&2
+    echo >&2  "examples:"
+    echo >&2  "    db-new-migration add_user_table"
+    exit 1
+fi
+diesel migration generate "$1"
