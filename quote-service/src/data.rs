@@ -1,3 +1,4 @@
+use chrono::{DateTime, Utc};
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct UserAccount {
@@ -12,12 +13,19 @@ pub struct QuoteFile {
     pub access: Permission,
 }
 
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct Quote {
+    pub content: String,
+    pub created: DateTime<Utc>,
+}
+
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Token(pub String);
 
 impl Token {
-    pub fn as_string(self) -> String {
-        let Token(v) = self; v
+    pub fn as_string(&self) -> String {
+        let Token(v) = self; v.clone()
     }
 
     pub fn to_str(&self) -> &str {

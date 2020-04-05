@@ -138,7 +138,7 @@ mod test {
         let db = connection();
         // Ignore whether this succeeds, will work the first time, don't care after that.
         let _ = api::user::create_crypted(&db, "http-test@example.com", CRYPTED);
-        api::session::create(&db, "http-test@example.com", PASSWORD).expect("Session creation.").to_string()
+        api::session::create(&db, "http-test@example.com", PASSWORD).expect("Session creation.").as_string()
     }
 
     fn client() -> Client {
