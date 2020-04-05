@@ -1,0 +1,7 @@
+---
+source: src/serial.rs
+expression: "QuoteFileCreateRequest{name: \"Good quotes\".to_string(),}"
+---
+{
+  "name": "Good quotes"
+}

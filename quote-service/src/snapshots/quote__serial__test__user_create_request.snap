@@ -1,0 +1,8 @@
+---
+source: src/serial.rs
+expression: "UserCreateRequest{email: \"test@example.com\".to_string(),\n                  password: \"12345678\".to_string(),}"
+---
+{
+  "email": "test@example.com",
+  "password": "12345678"
+}

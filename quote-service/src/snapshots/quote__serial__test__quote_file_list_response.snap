@@ -1,0 +1,18 @@
+---
+source: src/serial.rs
+expression: "QuoteFileListResponse{files:\n                          vec![QuoteFile\n                               {\n                                   id : 1, name : \"Good quotes\" . to_string(),\n                                   access : Permission :: Manage,\n                               }, QuoteFile\n                               {\n                                   id : 2, name : \"Bad quotes\" . to_string(),\n                                   access : Permission :: Read,\n                               }],}"
+---
+{
+  "files": [
+    {
+      "id": 1,
+      "name": "Good quotes",
+      "access": "manage"
+    },
+    {
+      "id": 2,
+      "name": "Bad quotes",
+      "access": "read"
+    }
+  ]
+}

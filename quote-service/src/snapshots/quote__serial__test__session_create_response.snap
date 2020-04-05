@@ -1,0 +1,7 @@
+---
+source: src/serial.rs
+expression: "SessionCreateResponse{token: \"some-magik-token\".to_string(),}"
+---
+{
+  "token": "some-magik-token"
+}

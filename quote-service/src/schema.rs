@@ -11,6 +11,7 @@ table! {
     quote_file (id) {
         id -> Int8,
         name -> Text,
+        created_at -> Timestamptz,
     }
 }
 

@@ -1,0 +1,9 @@
+---
+source: src/serial.rs
+expression: "QuoteFileCreateResponse{file:\n                            QuoteFile{id: 1,\n                                      name: \"Good quotes\".to_string(),\n                                      access: Permission::Manage,},}"
+---
+{
+  "id": 1,
+  "name": "Good quotes",
+  "access": "manage"
+}

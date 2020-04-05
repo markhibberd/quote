@@ -18,6 +18,7 @@ impl<'a, 'r> FromRequest<'a, 'r> for Session {
         let db = request.guard::<Database>()
             .map_failure(|_| (Status::InternalServerError, HttpError::ServerError { underlying: None }))?;
         let headers: Vec<_> = request.headers().get("Authorization").collect();
+        println!("headers: {:?}", headers);
         if headers.len() != 1 {
             return Outcome::Failure((Status::Forbidden, HttpError::Forbidden));
         }

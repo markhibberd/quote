@@ -33,7 +33,7 @@ pub fn by_key(db: &PgConnection, key: &Key) -> Result<Option<UserAccount>, Error
     Ok(schema::user_account::dsl::user_account
         .filter(schema::user_account::dsl::id.eq(key.to_i64()))
         .get_result::<UserAccountRecord>(db)
-        .optional()?.map(|u| UserAccount { key: Key(u.id), email: u.email.clone() }))
+        .optional()?.map(|u| UserAccount { key: Key(u.id), email: u.email }))
 }
 
 

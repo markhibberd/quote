@@ -24,7 +24,7 @@ pub fn create(db: &PgConnection, email: &str, password: &str) -> Result<Token, E
         match scrypt_check(password, &user_account.crypted) {
           Ok(()) => user_account.id,
           Err(scrypt::errors::CheckError::HashMismatch) => return Err(Error::NotAuthorized),
-          Err(scrypt::errors::CheckError::InvalidFormat) => return Err(Error::ScryptCheckError(scrypt::errors::CheckError::InvalidFormat).into()),
+          Err(scrypt::errors::CheckError::InvalidFormat) => return Err(Error::ScryptCheckError(scrypt::errors::CheckError::InvalidFormat)),
         }
     } else {
         let _dont_care_if_is_valid = scrypt_check(password, "$rscrypt$0$DggB$N2QXvv2BlUM7zl6A0+egOg==$NXGrxAIcOP0FgtcmZx5T9p8HUftBkkQHVSNu9WN5XLY=$");
@@ -43,7 +43,7 @@ pub fn create(db: &PgConnection, email: &str, password: &str) -> Result<Token, E
 
 pub fn check(db: &PgConnection, token: &Token) -> Result<Option<UserAccount>, Error> {
     let now: DateTime<Utc> = Utc::now();
-    let one_hour: DateTime<Utc> = now + Duration::hours(1);
+    let one_hour: DateTime<Utc> = now - Duration::hours(1);
     let updated = diesel::update(
         schema::session::dsl::session.filter(
             schema::session::dsl::token.eq(token.to_str()).and(

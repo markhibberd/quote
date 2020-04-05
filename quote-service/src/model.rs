@@ -52,6 +52,7 @@ pub struct NewQuoteFile<'a> {
 pub struct QuoteFileRecord {
     pub id: i64,
     pub name: String,
+    pub created_at: DateTime<Utc>,
 }
 
 #[derive(Debug, Insertable)]

@@ -8,7 +8,8 @@ CREATE TABLE user_account (
 
 CREATE TABLE quote_file (
     id BIGSERIAL PRIMARY KEY
-  , name TEXT NOT NULL UNIQUE
+  , name TEXT NOT NULL
+  , created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
 
 CREATE TABLE quote_file_permission (

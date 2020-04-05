@@ -1,0 +1,7 @@
+---
+source: src/serial.rs
+expression: "UserCreateResponse{email: \"test@example.com\".to_string(),}"
+---
+{
+  "email": "test@example.com"
+}

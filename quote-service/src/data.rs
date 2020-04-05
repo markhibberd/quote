@@ -5,11 +5,18 @@ pub struct UserAccount {
     pub email: String,
 }
 
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct QuoteFile {
+    pub name: String,
+    pub access: Permission,
+}
+
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Token(pub String);
 
 impl Token {
-    pub fn to_string(self) -> String {
+    pub fn as_string(self) -> String {
         let Token(v) = self; v
     }
 
@@ -18,6 +25,20 @@ impl Token {
     }
 }
 
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct Keyed<A> {
+    pub key: Key,
+    pub value: A,
+}
+
+impl<A> Keyed<A> {
+    pub fn map<B, F: FnOnce(A) -> B>(self, f: F) -> Keyed<B> {
+        let Keyed { key, value } = self;
+        let value = f(value);
+        Keyed { key, value }
+    }
+}
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Key(pub i64);
 
