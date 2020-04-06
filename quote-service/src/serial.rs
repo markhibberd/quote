@@ -40,6 +40,19 @@ pub struct QuoteFileListResponse {
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
+pub struct QuoteListResponse {
+    #[serde(flatten)]
+    pub file: QuoteFile,
+    pub quotes: Vec<Quote>,
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
+pub struct QuoteGetResponse {
+    #[serde(flatten)]
+    pub quote: Quote,
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 #[serde(rename_all = "kebab-case")]
 pub enum Permission {
     Manage,
@@ -52,6 +65,12 @@ pub struct QuoteFile {
     pub id: i64,
     pub name: String,
     pub access: Permission,
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
+pub struct Quote {
+    pub id: i64,
+    pub content: String,
 }
 
 impl From<Permission> for data::Permission {

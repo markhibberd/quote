@@ -20,6 +20,7 @@ use quote::http::session::Session;
 use quote::serial::{
     Permission,
     QuoteFile,
+    Quote,
     SessionCreateRequest,
     SessionCreateResponse,
     UserCreateRequest,
@@ -27,6 +28,8 @@ use quote::serial::{
     QuoteFileCreateRequest,
     QuoteFileCreateResponse,
     QuoteFileListResponse,
+    QuoteListResponse,
+    QuoteGetResponse,
 };
 
 #[get("/")]
@@ -43,7 +46,6 @@ fn session_create(db: Database, request: Json<SessionCreateRequest>) -> Result<J
     Ok(Json(SessionCreateResponse { token: token.as_string() }))
 }
 
-
 #[post("/user", data = "<request>")]
 fn user_create(db: Database, request: Json<UserCreateRequest>) -> Result<Json<UserCreateResponse>, HttpError> {
     api::user::create(&*db, &request.email, &request.password)?;
@@ -52,8 +54,7 @@ fn user_create(db: Database, request: Json<UserCreateRequest>) -> Result<Json<Us
 
 #[post("/quotes", data = "<request>")]
 fn file_create(db: Database, session: Session, request: Json<QuoteFileCreateRequest>) -> Result<Json<QuoteFileCreateResponse>, HttpError> {
-    let file = api::quote::create_file(&*db, &request.name)?;
-    api::quote::share_file(&*db, &file, &session.user.key, &data::Permission::Manage)?;
+    let file = api::quote::create_file(&*db, &session.user.key, &request.name)?;
     Ok(Json(QuoteFileCreateResponse { file: QuoteFile { id: file.to_i64(), name: request.name.clone(), access: Permission::Manage } }))
 }
 
@@ -61,6 +62,46 @@ fn file_create(db: Database, session: Session, request: Json<QuoteFileCreateRequ
 fn file_list(db: Database, session: Session) -> Result<Json<QuoteFileListResponse>, HttpError> {
     let files = api::quote::list_files(&*db, &session.user.key)?;
     Ok(Json(QuoteFileListResponse { files: files.into_iter().map(Into::into).collect() }))
+}
+
+#[get("/quotes/<file_id>")]
+fn file_get(db: Database, session: Session, file_id: i64) -> Result<Json<QuoteListResponse>, HttpError> {
+    let file = api::quote::by_id_file(&*db, &session.user.key, &data::Key(file_id))?;
+    let file = if let Some(file) = file { file } else { return Err(HttpError::NotFound); };
+    let quotes = api::quote::list(&*db, &session.user.key, &data::Key(file_id))?;
+    Ok(Json(QuoteListResponse {
+        file: file.into(),
+        quotes: quotes.iter().map(|q| Quote { id: q.key.to_i64(), content: q.value.content.clone() }).collect(),
+    }))
+}
+
+#[post("/quotes/<file_id>")]
+fn quote_create(db: Database, session: Session, file_id: i64) -> Result<Json<QuoteListResponse>, HttpError> {
+    let file = api::quote::by_id_file(&*db, &session.user.key, &data::Key(file_id))?;
+    let file = if let Some(file) = file { file } else { return Err(HttpError::NotFound); };
+    let quotes = api::quote::list(&*db, &session.user.key, &data::Key(file_id))?;
+    Ok(Json(QuoteListResponse {
+        file: file.into(),
+        quotes: quotes.iter().map(|q| Quote { id: q.key.to_i64(), content: q.value.content.clone() }).collect(),
+    }))
+}
+
+#[post("/quotes/<file_id>/quote")]
+fn quote_random(db: Database, session: Session, file_id: i64) -> Result<Json<QuoteGetResponse>, HttpError> {
+    let quote = api::quote::random(&*db, &session.user.key, &data::Key(file_id))?;
+    let quote = if let Some(quote) = quote { quote } else { return Err(HttpError::NotFound); };
+    Ok(Json(QuoteGetResponse {
+        quote: Quote { id: quote.key.to_i64(), content: quote.value.content }
+    }))
+}
+
+#[get("/quote/<quote_id>")]
+fn quote_get(db: Database, session: Session, quote_id: i64) -> Result<Json<QuoteGetResponse>, HttpError> {
+    let quote = api::quote::by_id(&*db, &session.user.key, &data::Key(quote_id))?;
+    let quote = if let Some(quote) = quote { quote } else { return Err(HttpError::NotFound); };
+    Ok(Json(QuoteGetResponse {
+        quote: Quote { id: quote.key.to_i64(), content: quote.value.content }
+    }))
 }
 
 #[catch(404)]
@@ -87,6 +128,7 @@ fn rocket(env: rocket::config::Environment, url: &str, pool_size: Option<i64>) -
         session_create,
         user_create,
         file_create,
+        file_get,
     ];
     rocket::custom(config)
         .mount("/", routes)
