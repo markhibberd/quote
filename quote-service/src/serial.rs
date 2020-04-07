@@ -34,6 +34,18 @@ pub struct QuoteFileCreateResponse {
     pub file: QuoteFile,
 }
 
+
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
+pub struct QuoteCreateRequest {
+    pub content: String,
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
+pub struct QuoteCreateResponse {
+    #[serde(flatten)]
+    pub quote: Quote,
+}
+
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 pub struct QuoteFileListResponse {
     pub files: Vec<QuoteFile>,

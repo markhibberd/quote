@@ -68,7 +68,10 @@ pub fn by_id_file(db: &PgConnection, user: &Key, file: &Key) -> Result<Option<Ke
         }))
 }
 
-pub fn add(db: &PgConnection, file: &Key, content: &str) -> Result<Key, Error> {
+pub fn add(db: &PgConnection, user: &Key, file: &Key, content: &str) -> Result<Key, Error> {
+    if !has_access(db, user, file, Permission::Write)? {
+        return Err(Error::NotAuthorized);
+    }
     let record = diesel::insert_into(schema::quote::table)
         .values(NewQuote { quote_file: file.to_i64(), content })
         .get_result::<QuoteRecord>(db)?;
@@ -248,7 +251,7 @@ mod test {
         db_test(|db| {
             let u = api::user::create_crypted(db, "test@example.com", CRYPTED)?;
             let f = api::quote::create_file(db, &u, "A quote file")?;
-            let r = api::quote::add(db, &f, "A nice quote");
+            let r = api::quote::add(db, &u, &f, "A nice quote");
             assert!(r.is_ok());
             Ok(())
         });
@@ -259,7 +262,7 @@ mod test {
         db_test(|db| {
             let u = api::user::create_crypted(db, "test@example.com", CRYPTED)?;
             let f = api::quote::create_file(db, &u, "A quote file")?;
-            let q = api::quote::add(db, &f, "A nice quote")?;
+            let q = api::quote::add(db, &u, &f, "A nice quote")?;
             let qs = api::quote::list(db, &u, &f)?;
             assert_eq!(qs.len(), 1);
             assert_eq!(qs[0].key, q);
@@ -273,7 +276,7 @@ mod test {
         db_test(|db| {
             let u = api::user::create_crypted(db, "test@example.com", CRYPTED)?;
             let f = api::quote::create_file(db, &u, "A quote file")?;
-            let q = api::quote::add(db, &f, "A nice quote")?;
+            let q = api::quote::add(db, &u, &f, "A nice quote")?;
             let qs = api::quote::list(db, &u, &f)?;
             assert_eq!(qs.len(), 1);
             assert_eq!(qs[0].key, q);
@@ -287,7 +290,7 @@ mod test {
         db_test(|db| {
             let u = api::user::create_crypted(db, "test@example.com", CRYPTED)?;
             let f = api::quote::create_file(db, &u, "A quote file")?;
-            let q = api::quote::add(db, &f, "A nice quote")?;
+            let q = api::quote::add(db, &u, &f, "A nice quote")?;
             let r = api::quote::by_id(db, &u, &q)?;
             assert!(r.is_some());
             let r = r.expect("is_some");
@@ -312,7 +315,7 @@ mod test {
         db_test(|db| {
             let u = api::user::create_crypted(db, "test@example.com", CRYPTED)?;
             let f = api::quote::create_file(db, &u, "A quote file")?;
-            let q = api::quote::add(db, &f, "A nice quote")?;
+            let q = api::quote::add(db, &u, &f, "A nice quote")?;
             let r = api::quote::random(db, &u, &f)?;
             assert!(r.is_some());
             let r = r.expect("is_some");

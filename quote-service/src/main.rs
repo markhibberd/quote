@@ -28,6 +28,8 @@ use quote::serial::{
     QuoteFileCreateRequest,
     QuoteFileCreateResponse,
     QuoteFileListResponse,
+    QuoteCreateRequest,
+    QuoteCreateResponse,
     QuoteListResponse,
     QuoteGetResponse,
 };
@@ -75,14 +77,16 @@ fn file_get(db: Database, session: Session, file_id: i64) -> Result<Json<QuoteLi
     }))
 }
 
-#[post("/quotes/<file_id>")]
-fn quote_create(db: Database, session: Session, file_id: i64) -> Result<Json<QuoteListResponse>, HttpError> {
+#[post("/quotes/<file_id>", data = "<request>")]
+fn quote_create(db: Database, session: Session, file_id: i64, request: Json<QuoteCreateRequest>) -> Result<Json<QuoteCreateResponse>, HttpError> {
     let file = api::quote::by_id_file(&*db, &session.user.key, &data::Key(file_id))?;
-    let file = if let Some(file) = file { file } else { return Err(HttpError::NotFound); };
-    let quotes = api::quote::list(&*db, &session.user.key, &data::Key(file_id))?;
-    Ok(Json(QuoteListResponse {
-        file: file.into(),
-        quotes: quotes.iter().map(|q| Quote { id: q.key.to_i64(), content: q.value.content.clone() }).collect(),
+    if file.is_none() { return Err(HttpError::NotFound); };
+    let quote = api::quote::add(&*db, &session.user.key, &data::Key(file_id), &request.content)?;
+    Ok(Json(QuoteCreateResponse {
+        quote: Quote {
+            id: quote.to_i64(),
+            content: request.content.clone(),
+        }
     }))
 }
 
@@ -128,7 +132,11 @@ fn rocket(env: rocket::config::Environment, url: &str, pool_size: Option<i64>) -
         session_create,
         user_create,
         file_create,
+        file_list,
         file_get,
+        quote_create,
+        quote_get,
+        quote_random,
     ];
     rocket::custom(config)
         .mount("/", routes)
@@ -161,6 +169,11 @@ mod test {
         Permission,
         QuoteFileCreateRequest,
         QuoteFileCreateResponse,
+        QuoteFileListResponse,
+        QuoteListResponse,
+        QuoteCreateRequest,
+        QuoteCreateResponse,
+        QuoteGetResponse,
     };
 
     static PASSWORD: &str = "12345678";
@@ -221,5 +234,181 @@ mod test {
         let actual = parse_response::<QuoteFileCreateResponse>(&mut response);
         assert_eq!(actual.file.name, "Test file");
         assert_eq!(actual.file.access, Permission::Manage);
+    }
+
+    #[test]
+    fn file_list() {
+        let client = client();
+        let token = seed();
+        let mut response = client.get("/quotes")
+            .header(Accept::JSON)
+            .header(Header::new("Authorization", token))
+            .dispatch();
+        assert_eq!(response.status(), Status::Ok);
+        let _actual = parse_response::<QuoteFileListResponse>(&mut response);
+    }
+
+    #[test]
+    fn file_get() {
+        let client = client();
+        let token = seed();
+        let mut response = client.post("/quotes")
+            .header(ContentType::JSON)
+            .header(Accept::JSON)
+            .header(Header::new("Authorization", token.clone()))
+            .body(serde_json::to_string(&QuoteFileCreateRequest {
+                name: "Test file".to_string(),
+            }).expect("Serialisation."))
+            .dispatch();
+        assert_eq!(response.status(), Status::Ok);
+        let created = parse_response::<QuoteFileCreateResponse>(&mut response);
+
+        let mut response = client.get(format!("/quotes/{}", created.file.id))
+            .header(Accept::JSON)
+            .header(Header::new("Authorization", token))
+            .dispatch();
+        assert_eq!(response.status(), Status::Ok);
+        let lookup = parse_response::<QuoteListResponse>(&mut response);
+
+        assert_eq!(lookup.file.name, "Test file");
+        assert_eq!(lookup.file.access, Permission::Manage);
+        assert_eq!(lookup.file, created.file);
+    }
+
+
+    #[test]
+    fn quote_create() {
+        let client = client();
+        let token = seed();
+        let mut response = client.post("/quotes")
+            .header(ContentType::JSON)
+            .header(Accept::JSON)
+            .header(Header::new("Authorization", token.clone()))
+            .body(serde_json::to_string(&QuoteFileCreateRequest {
+                name: "Test file".to_string(),
+            }).expect("Serialisation."))
+            .dispatch();
+        assert_eq!(response.status(), Status::Ok);
+        let file_created = parse_response::<QuoteFileCreateResponse>(&mut response);
+
+        let mut response = client.post(format!("/quotes/{}", file_created.file.id))
+            .header(ContentType::JSON)
+            .header(Accept::JSON)
+            .header(Header::new("Authorization", token))
+            .body(serde_json::to_string(&QuoteCreateRequest {
+                content: "This is a very good quote.".to_string(),
+            }).expect("Serialisation."))
+            .dispatch();
+        assert_eq!(response.status(), Status::Ok);
+        let actual = parse_response::<QuoteCreateResponse>(&mut response);
+        assert_eq!(actual.quote.content, "This is a very good quote.");
+    }
+
+
+    #[test]
+    fn quote_get() {
+        let client = client();
+        let token = seed();
+        let mut response = client.post("/quotes")
+            .header(ContentType::JSON)
+            .header(Accept::JSON)
+            .header(Header::new("Authorization", token.clone()))
+            .body(serde_json::to_string(&QuoteFileCreateRequest {
+                name: "Test file".to_string(),
+            }).expect("Serialisation."))
+            .dispatch();
+        assert_eq!(response.status(), Status::Ok);
+        let file_created = parse_response::<QuoteFileCreateResponse>(&mut response);
+
+        let mut response = client.post(format!("/quotes/{}", file_created.file.id))
+            .header(ContentType::JSON)
+            .header(Accept::JSON)
+            .header(Header::new("Authorization", token.clone()))
+            .body(serde_json::to_string(&QuoteCreateRequest {
+                content: "This is a very good quote.".to_string(),
+            }).expect("Serialisation."))
+            .dispatch();
+        assert_eq!(response.status(), Status::Ok);
+        let quote_created = parse_response::<QuoteCreateResponse>(&mut response);
+
+
+        let mut response = client.get(format!("/quote/{}", quote_created.quote.id))
+            .header(Accept::JSON)
+            .header(Header::new("Authorization", token))
+            .dispatch();
+        assert_eq!(response.status(), Status::Ok);
+        let lookup = parse_response::<QuoteGetResponse>(&mut response);
+
+        assert_eq!(lookup.quote.content, "This is a very good quote.");
+        assert_eq!(lookup.quote, quote_created.quote);
+    }
+
+    #[test]
+    fn quote_random() {
+        let client = client();
+        let token = seed();
+        let mut response = client.post("/quotes")
+            .header(ContentType::JSON)
+            .header(Accept::JSON)
+            .header(Header::new("Authorization", token.clone()))
+            .body(serde_json::to_string(&QuoteFileCreateRequest {
+                name: "Test file".to_string(),
+            }).expect("Serialisation."))
+            .dispatch();
+        assert_eq!(response.status(), Status::Ok);
+        let file_created = parse_response::<QuoteFileCreateResponse>(&mut response);
+
+        let mut response = client.post(format!("/quotes/{}", file_created.file.id))
+            .header(ContentType::JSON)
+            .header(Accept::JSON)
+            .header(Header::new("Authorization", token.clone()))
+            .body(serde_json::to_string(&QuoteCreateRequest {
+                content: "This is a very good quote.".to_string(),
+            }).expect("Serialisation."))
+            .dispatch();
+        assert_eq!(response.status(), Status::Ok);
+        let quote_created = parse_response::<QuoteCreateResponse>(&mut response);
+
+
+        let mut response = client.post(format!("/quotes/{}/quote", file_created.file.id))
+            .header(Accept::JSON)
+            .header(Header::new("Authorization", token))
+            .dispatch();
+        assert_eq!(response.status(), Status::Ok);
+        let lookup = parse_response::<QuoteGetResponse>(&mut response);
+
+        assert_eq!(lookup.quote.content, "This is a very good quote.");
+        assert_eq!(lookup.quote, quote_created.quote);
+    }
+
+
+    #[test]
+    fn authentication_bad_token() {
+        let client = client();
+        let _token = seed();
+        let response = client.post("/quotes")
+            .header(ContentType::JSON)
+            .header(Accept::JSON)
+            .header(Header::new("Authorization", "some bad token"))
+            .body(serde_json::to_string(&QuoteFileCreateRequest {
+                name: "Test file".to_string(),
+            }).expect("Serialisation."))
+            .dispatch();
+        assert_eq!(response.status(), Status::Forbidden);
+    }
+
+
+    #[test]
+    fn authentication_missing_token() {
+        let client = client();
+        let _token = seed();
+        let response = client.post("/quotes")
+            .header(ContentType::JSON)
+            .header(Accept::JSON)
+            .body(serde_json::to_string(&QuoteFileCreateRequest {
+                name: "Test file".to_string(),
+            }).expect("Serialisation."))
+            .dispatch();
+        assert_eq!(response.status(), Status::Forbidden);
     }
 }
