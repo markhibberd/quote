@@ -8,7 +8,9 @@ extern crate rocket;
 extern crate serde;
 
 use rocket::Rocket;
+use rocket::http::Method;
 use rocket_contrib::json::Json;
+use rocket_cors::{AllowedHeaders, AllowedOrigins};
 use serde_json::{json, Value};
 use std::collections::HashMap;
 
@@ -116,6 +118,14 @@ fn not_found() -> HttpError {
 diesel_migrations::embed_migrations!("migrations");
 
 fn rocket(env: rocket::config::Environment, url: &str, pool_size: Option<i64>) -> Rocket {
+    let cors = rocket_cors::CorsOptions {
+        allowed_origins: AllowedOrigins::some_exact(&["http://localhost:3000"]),
+        allowed_methods: vec![Method::Get, Method::Post].into_iter().map(From::from).collect(),
+        allowed_headers: AllowedHeaders::some(&["Authorization", "Accept", "Content-Type"]),
+        allow_credentials: true,
+        ..Default::default()
+    }.to_cors().expect("Static cors start-up configuration should be valid ");
+
     let mut database_config = HashMap::new();
     let mut databases = HashMap::new();
     database_config.insert("url", rocket::config::Value::from(url));
@@ -142,6 +152,7 @@ fn rocket(env: rocket::config::Environment, url: &str, pool_size: Option<i64>) -
         .mount("/", routes)
         .register(catchers![not_found])
         .attach(Database::fairing())
+        .attach(cors)
 }
 
 fn main() {
