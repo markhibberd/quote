@@ -1,13 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { set } from 'lodash/fp';
 
 const { reducer, actions } = createSlice({
   name: 'session',
   initialState: {
     token: localStorage.getItem('_quotefile_session'),
+    loggingIn: false,
+    error: null,
   },
   reducers: {
-    login: (state, action) => set('token', action.payload, state),
+    loggingIn: (state) => ({ ...state, error: null, loggingIn: true }),
+    login: (state, action) => ({ ...state, token: action.payload, error: null, loggingIn: false }),
+    loginError: (state, action) => ({ ...state, error: action.payload, loggingIn: false }),
+    logout: () => ({}),
   },
 });
 

@@ -2,15 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider as ReduxProvider } from 'react-redux';
 import { createBrowserHistory } from 'history';
-import UIkit from 'uikit';
-import Icons from 'uikit/dist/js/uikit-icons';
-import '../node_modules/uikit/dist/css/uikit.min.css'
 import './index.css';
 import createStore from './store';
+import './App.sass';
 import App from './App';
-import * as serviceWorker from './serviceWorker';
 
-UIkit.use(Icons);
+import * as serviceWorker from './serviceWorker';
 
 const history = createBrowserHistory();
 const store = createStore(history)

@@ -5,7 +5,6 @@ import { reducer as sessionReducer } from './session';
 const createRootReducer = (history) => combineReducers({
   router: connectRouter(history),
   session: sessionReducer,
-
 });
 
 
