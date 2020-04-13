@@ -4,7 +4,6 @@ import { Provider as ReduxProvider } from 'react-redux';
 import { createBrowserHistory } from 'history';
 import './index.css';
 import createStore from './store';
-import './App.sass';
 import App from './App';
 
 import * as serviceWorker from './serviceWorker';
