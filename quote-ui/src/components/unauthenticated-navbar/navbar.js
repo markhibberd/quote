@@ -1,23 +1,18 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Nav } from './navbar.styles';
+import { LinkButton } from 'components/link-button';
+import { Brand } from 'components/brand';
+import { Navbar } from 'components/navbar';
 
 const UnauthenticatedNavbar = () => (
-  <Nav>
-    <div>
-      <Link to='/'><i class="far fa-comment-alt"></i>&nbsp;&nbsp;The Quotefiles</Link>
-    </div>
-    <div>
-      <div>
-        <div>
-          <div>
-            <Link to='/login'>Login</Link>
-            <Link to='/signup'>Signup</Link>
-          </div>
-        </div>
-      </div>
-    </div>
-  </Nav>
+  <Navbar>
+    <Navbar.Left>
+      <Brand/>
+    </Navbar.Left>
+    <Navbar.Right>
+      <LinkButton to='/login' label='Login' magnitude='header'/>
+      <LinkButton to='/signup' label='Signup' magnitude='header'/>
+    </Navbar.Right>
+  </Navbar>
 );
 
 
