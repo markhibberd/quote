@@ -12,7 +12,7 @@ export const Basic = () => (
       <LinkButton to='/something' label='Something'/>
     </Navbar.Left>
     <Navbar.Right>
-      <LinkButton to='/login' label='Login' magnitude='header'/>
+      <LinkButton to='/login' label='Login'/>
       <LinkButton to='/signup' label='Signup'/>
     </Navbar.Right>
   </Navbar>

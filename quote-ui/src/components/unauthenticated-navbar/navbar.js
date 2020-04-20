@@ -10,7 +10,7 @@ const UnauthenticatedNavbar = () => (
     </Navbar.Left>
     <Navbar.Right>
       <LinkButton to='/login' label='Login' magnitude='header'/>
-      <LinkButton to='/signup' label='Signup' magnitude='header'/>
+      <LinkButton to='/signup' label='Signup' magnitude='header' variant='primary'/>
     </Navbar.Right>
   </Navbar>
 );

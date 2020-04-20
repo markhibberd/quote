@@ -11,3 +11,8 @@ export const Basic = () => (
 export const Header = () => (
   <LinkButton to='/' label='Sign in' magnitude='heading'/>
 );
+
+
+export const Primary = () => (
+  <LinkButton to='/' label='Sign in' variant='primary'/>
+);

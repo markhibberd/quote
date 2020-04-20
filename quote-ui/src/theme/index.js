@@ -19,6 +19,15 @@ const theme = {
   },
   color: {
     header: '#595959',
+    danger: '#F24236',
+    primary: '#2E86AB',
+    pallete: {
+      one: '#454851',
+      two: '#2E86AB',
+      three: '#94E8B4',
+      four: '#FF9505',
+      five: '#F24236',
+    }
   }
 
 };
