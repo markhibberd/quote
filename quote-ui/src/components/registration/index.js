@@ -1,3 +1,3 @@
-import { Registration } from './registration';
+import { ManagedRegistration } from './registration.managed';
 
-export default Registration;
+export default ManagedRegistration;

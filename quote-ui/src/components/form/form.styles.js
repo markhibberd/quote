@@ -2,8 +2,10 @@ import styled from 'styled-components';
 
 const FormBlock = styled.div`
   ${({ maxWidth }) => maxWidth ? `max-width: ${maxWidth}px;` : ''}
+  flex: 1 0 auto;
 `
 
+// FIX: Needs to be a proper component and pass through 'magnitude';
 const Buttons = styled.div`
   margin-top: 16px;
   display: flex;

@@ -1,3 +1,3 @@
-import { Form, Input, Button } from 'form';
+import { Control, Form, Input, Button, Buttons } from './form';
 
-export { Form, Input, Button }
+export { Control, Form, Input, Button, Buttons }

@@ -6,15 +6,18 @@ const theme = {
     size: {
       default: '12px',
       header: '14px',
+      title: '20px',
     },
     weight: {
       default: 400,
       header: 500,
+      title: 700,
 
     },
     height: {
       default: '20px',
       header: '22px',
+      title: '28px',
     },
   },
   color: {
