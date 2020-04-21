@@ -5,6 +5,6 @@ const Title = styled.h1`
   font-size: ${({ theme, magnitude }) => theme.font.size.title};
   font-weight: ${({ theme, magnitude }) => theme.font.weight.title};
   font-family: ${({ theme }) => theme.font.family};
+`;
 
-`
 export { Title };

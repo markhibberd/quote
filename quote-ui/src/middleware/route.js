@@ -9,10 +9,9 @@ const createRouteMiddleware = () => {
       return;
     }
 
-    if (action.type ===  sessionActions.login.type) {
-      dispatch(push(`/`, { autoSelect: true }));
+    if (action.type === sessionActions.login.type) {
+      dispatch(push('/', { autoSelect: true }));
     }
-
   };
 };
 

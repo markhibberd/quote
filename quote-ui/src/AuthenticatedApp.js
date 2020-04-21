@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { ConnectedRouter } from 'connected-react-router';
 import { Switch, Route } from 'react-router-dom';
 
@@ -11,11 +12,18 @@ const AuthenticatedApp = ({ history }) => {
         <Route
           exact
           component={Home}
-          path='/'
+          path="/"
         />
       </Switch>
     </ConnectedRouter>
   );
+};
+
+AuthenticatedApp.propTypes = {
+  history: PropTypes.object.isRequired,
+};
+
+AuthenticatedApp.defaultProps = {
 };
 
 export default AuthenticatedApp;

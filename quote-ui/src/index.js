@@ -9,7 +9,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 const history = createBrowserHistory();
-const store = createStore(history)
+const store = createStore(history);
 
 ReactDOM.render(
   <React.StrictMode>

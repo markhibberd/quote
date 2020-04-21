@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import Registration from './registration';
 import register from 'actions/register';
+import { Registration } from './registration';
 
 const ManagedRegistration = () => {
   const dispatch = useDispatch();

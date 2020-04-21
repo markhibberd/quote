@@ -12,6 +12,6 @@ const Label = styled.label`
   font-weight: ${({ theme, magnitude }) => theme.font.weight[magnitude || 'default']};
   font-family: ${({ theme }) => theme.font.family};
   margin-bottom: 4px;
-`
+`;
 
 export { ControlBlock, Label };

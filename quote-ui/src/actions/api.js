@@ -12,10 +12,9 @@ const withApi = (action) => {
         'Content-Type': 'application/json',
         Authorization: token,
       }
-    })
+    });
     return dispatch(action(api));
   };
-
 };
 
 const withUnauthenticatedApi = (action) => {
@@ -27,7 +26,7 @@ const withUnauthenticatedApi = (action) => {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       }
-    })
+    });
     return dispatch(action(api));
   };
 };

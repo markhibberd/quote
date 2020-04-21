@@ -1,6 +1,7 @@
 import React from 'react';
-import { BrandContainer, BrandTitle } from './brand.styles';
 import { MessageSquare } from 'react-feather';
+import { BrandContainer, BrandTitle } from './brand.styles';
+
 
 const Brand = () => (
   <BrandContainer>

@@ -1,12 +1,11 @@
 import styled from 'styled-components';
 
-
 const Block = styled.div`
   display: block;
   height: 100%;
   width: 100%;
   position: relative;
-`
+`;
 
 const Row = styled.div`
   display: flex;

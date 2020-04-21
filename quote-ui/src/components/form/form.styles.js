@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const FormBlock = styled.div`
   ${({ maxWidth }) => maxWidth ? `max-width: ${maxWidth}px;` : ''}
   flex: 1 0 auto;
-`
+`;
 
 // FIX: Needs to be a proper component and pass through 'magnitude';
 const Buttons = styled.div`
@@ -19,14 +19,14 @@ const Buttons = styled.div`
     right: 'flex-end',
     left: 'flex-start',
   }[align || 'right']);
-`
+`;
 
 const Button = styled.button`
   display: inline-block;
   background-color: ${({ theme, variant }) => ({
     default: '#FFFFFF',
     primary: theme.color.primary,
-  }[variant || 'default' ])};
+  }[variant || 'default'])};
   box-sizing: border-box;
   border-style: solid;
   border-color: ${({ theme, variant }) => ({
@@ -57,7 +57,7 @@ const Button = styled.button`
     block: '100%',
     'inline-block': 'auto',
   }[display || 'inline-block'])};
-`
+`;
 
 const Input = styled.input`
   -moz-appearance: textfield;
@@ -74,5 +74,6 @@ const Input = styled.input`
   &::placeholder {
     color: rgba(0, 0, 0, 0.25);
   }
-`
+`;
+
 export { FormBlock, Button, Buttons, Input };

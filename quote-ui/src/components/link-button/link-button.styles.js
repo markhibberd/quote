@@ -31,7 +31,6 @@ const Button = styled(Link)`
   font-size: ${({ theme, magnitude }) => theme.font.size[magnitude]};
   font-weight: ${({ theme, magnitude }) => theme.font.weight[magnitude]};
   font-family: ${({ theme }) => theme.font.family};
-}
-`
+`;
 
 export { Button };

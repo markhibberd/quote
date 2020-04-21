@@ -7,7 +7,7 @@ const Nav = styled.nav`
   align-items: center;
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.05);
   border-bottom: 1px solid #e8e8e8;
-`
+`;
 
 const Left = styled.div`
   display: flex;
@@ -17,7 +17,7 @@ const Left = styled.div`
   & > * {
     margin-right: 16px;
   }
-`
+`;
 
 const Right = styled.div`
   display: flex;
@@ -27,7 +27,7 @@ const Right = styled.div`
   & > * {
     margin-left: 16px;
   }
-`
+`;
 
 
 export { Nav, Left, Right };

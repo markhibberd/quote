@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import Login from './login';
 import login from 'actions/login';
+import { Login } from './login';
 
 const ManagedLogin = () => {
   const dispatch = useDispatch();

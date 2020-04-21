@@ -30,9 +30,8 @@ const theme = {
       three: '#94E8B4',
       four: '#FF9505',
       five: '#F24236',
-    }
-  }
-
+    },
+  },
 };
 
 

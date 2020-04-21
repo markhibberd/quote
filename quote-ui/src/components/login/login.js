@@ -1,7 +1,8 @@
 import React, { useState, useCallback } from 'react';
-import { Title } from './login.styles';
+import PropTypes from 'prop-types';
 import { Layout } from 'components/layout';
 import { Form, Control, Buttons, Button, Input } from 'components/form';
+import { Title } from './login.styles';
 
 const Login = ({ onLogin }) => {
   const [email, setEmail] = useState('');
@@ -26,21 +27,24 @@ const Login = ({ onLogin }) => {
 
   return (
     <Layout.Row center>
-      <Form maxWidth={400} magnitude='header'>
+      <Form maxWidth={400} magnitude="header">
         <Title>Sign in to Quotefile</Title>
-        <Control label='Email'>
-          <Input type='text' name='email' value={email} onChange={onEmailChange} placeholder='Enter your email address' autoFocus/>
+        <Control label="Email">
+          <Input type="text" name="email" value={email} onChange={onEmailChange} placeholder="Enter your email address" autoFocus/>
         </Control>
-        <Control label='Password'>
-          <Input type='password' name='password' value={password} onChange={onPasswordChange} placeholder='Enter your password'/>
+        <Control label="Password">
+          <Input type="password" name="password" value={password} onChange={onPasswordChange} placeholder="Enter your password"/>
         </Control>
         <Buttons>
-          <Button magnitude='header' display='block' onClick={onSubmit} variant='primary'>Sign in</Button>
+          <Button magnitude="header" display="block" onClick={onSubmit} variant="primary">Sign in</Button>
         </Buttons>
       </Form>
     </Layout.Row>
   );
 };
 
+Login.propTypes = {
+  onLogin: PropTypes.func.isRequired,
+};
 
 export { Login };

@@ -1,5 +1,5 @@
 {
-  "extends": ["react-app"],
+  "extends": ["airbnb", "airbnb/hooks", "react-app"],
   "env": {
     "browser": true
   },
@@ -7,7 +7,25 @@
     "react-hooks"
   ],
   "rules": {
+    "no-console": "off",
+    "arrow-parens": "off",
+    "comma-dangle": "off",
+    "object-curly-newline": "off",
+    "arrow-body-style": "off",
+    "no-confusing-arrow": "off",
+    "implicit-arrow-linebreak": "off",
+    "import/prefer-default-export": "off",
+    "react/forbid-prop-types": "off",
+    "react/jsx-tag-spacing": "off",
     "react-hooks/exhaustive-deps": "error",
-    "react-hooks/rules-of-hooks": "error"
+    "react-hooks/rules-of-hooks": "error",
+    "react/jsx-filename-extension": [1, { "extensions": [".js", "jsx"] }]
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "moduleDirectory": ["src", "node_modules"]
+      }
+    }
   }
 }

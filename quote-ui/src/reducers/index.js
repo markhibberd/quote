@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { connectRouter } from 'connected-react-router'
+import { connectRouter } from 'connected-react-router';
 import { reducer as sessionReducer } from './session';
 
 const createRootReducer = (history) => combineReducers({

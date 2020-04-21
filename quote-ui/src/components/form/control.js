@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ControlBlock, Label } from './control.styles';
-
 import { useId } from '@reach/auto-id';
+import { ControlBlock, Label } from './control.styles';
 
 const Control = ({ label, magnitude, children }) => {
   const id = useId();
@@ -14,7 +13,7 @@ const Control = ({ label, magnitude, children }) => {
         React.cloneElement(child, { id, magnitude }))}
     </ControlBlock>
   );
-}
+};
 
 Control.propTypes = {
   label: PropTypes.string,
@@ -29,8 +28,9 @@ Control.propTypes = {
 };
 
 Control.defaultProps = {
+  children: null,
   label: null,
   magnitude: 'default',
 };
 
-export { Control }
+export { Control };

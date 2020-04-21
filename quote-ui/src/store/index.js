@@ -9,7 +9,7 @@ const createStore = (history) => configureStore({
     ...getDefaultMiddleware(),
     routerMiddleware(history),
     createRouteMiddleware(),
-  ]
+  ],
 });
 
 export default createStore;

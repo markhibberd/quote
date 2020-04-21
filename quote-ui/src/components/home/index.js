@@ -16,12 +16,12 @@ const Landing = () => {
         <nav>
           <div>
             <ul>
-              <li><Link to='/'>The Quotefiles</Link></li>
+              <li><Link to="/">The Quotefiles</Link></li>
             </ul>
           </div>
           <div>
             <ul>
-              <li><button onClick={onLogout}>Logout</button></li>
+              <li><button type="submit" onClick={onLogout}>Logout</button></li>
             </ul>
           </div>
         </nav>

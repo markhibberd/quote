@@ -9,30 +9,30 @@ export const BasicInput = () => (
 
 
 export const BasicButton = () => (
-  <Buttons align='left'>
+  <Buttons align="left">
     <Button>Default</Button>
-    <Button variant='primary'>Primary</Button>
+    <Button variant="primary">Primary</Button>
   </Buttons>
 );
 
 
 export const BasicControl = () => (
   <Form>
-    <Control label='Name'>
+    <Control label="Name">
       <Input />
     </Control>
-    <Control label='Occupation'>
+    <Control label="Occupation">
       <Input />
     </Control>
   </Form>
 );
 
 export const HeaderControl = () => (
-  <Form magnitude='header'>
-    <Control label='Name'>
+  <Form magnitude="header">
+    <Control label="Name">
       <Input />
     </Control>
-    <Control label='Occupation'>
+    <Control label="Occupation">
       <Input />
     </Control>
   </Form>
@@ -40,30 +40,30 @@ export const HeaderControl = () => (
 
 
 export const FormBig = () => (
-  <Form maxWidth={300} magnitude='header'>
-    <Control label='Name'>
+  <Form maxWidth={300} magnitude="header">
+    <Control label="Name">
       <Input />
     </Control>
-    <Control label='Occupation'>
+    <Control label="Occupation">
       <Input />
     </Control>
     <Buttons>
-      <Button display='block' variant='primary'>Go!</Button>
+      <Button display="block" variant="primary">Go!</Button>
     </Buttons>
   </Form>
 );
 
 export const FormLittle = () => (
   <Form maxWidth={300}>
-    <Control label='Name'>
+    <Control label="Name">
       <Input />
     </Control>
-    <Control label='Occupation'>
+    <Control label="Occupation">
       <Input />
     </Control>
     <Buttons>
       <Button>Concel</Button>
-      <Button variant='primary'>Submit</Button>
+      <Button variant="primary">Submit</Button>
     </Buttons>
   </Form>
 );

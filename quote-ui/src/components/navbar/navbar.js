@@ -17,6 +17,7 @@ Navbar.propTypes = {
 };
 
 Navbar.defaultProps = {
+  children: null,
 };
 
 Navbar.Left = Left;

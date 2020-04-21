@@ -10,7 +10,7 @@ const Form = ({ magnitude, children, maxWidth }) => {
         React.cloneElement(child, { magnitude }))}
     </FormBlock>
   );
-}
+};
 
 Form.propTypes = {
   magnitude: PropTypes.oneOf([
@@ -21,10 +21,13 @@ Form.propTypes = {
     PropTypes.node,
     PropTypes.arrayOf(PropTypes.node).isRequired,
   ]),
+  maxWidth: PropTypes.number,
 };
 
 Form.defaultProps = {
+  children: null,
   magnitude: 'default',
+  maxWidth: null,
 };
 
-export { Control, Form, Input, Button, Buttons }
+export { Control, Form, Input, Button, Buttons };
