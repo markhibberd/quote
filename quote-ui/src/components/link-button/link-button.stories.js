@@ -9,7 +9,7 @@ export const Basic = () => (
 
 
 export const Header = () => (
-  <LinkButton to='/' label='Sign in' magnitude='heading'/>
+  <LinkButton to='/' label='Sign in' magnitude='header'/>
 );
 
 
