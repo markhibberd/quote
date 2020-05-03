@@ -1,7 +1,7 @@
 import React from 'react';
 import { LinkButton } from './link-button';
 
-export default { title: 'Link Button' };
+export default { title: 'Link button' };
 
 export const Basic = () => (
   <LinkButton to="/" label="Sign in"/>

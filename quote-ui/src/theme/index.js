@@ -9,6 +9,7 @@ const theme = {
       title: '20px',
     },
     weight: {
+      light: 300,
       default: 400,
       header: 500,
       title: 700,
