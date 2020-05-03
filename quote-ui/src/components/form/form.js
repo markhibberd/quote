@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { FormBlock, Input, Button, Buttons } from './form.styles';
 import { Control } from './control';
 
-const Form = ({ magnitude, children, maxWidth }) => {
+const Form = ({ magnitude, children, maxWidth, onSubmit }) => {
   return (
-    <FormBlock maxWidth={maxWidth}>
+    <FormBlock maxWidth={maxWidth} onSubmit={onSubmit}>
       {React.Children.map(children, (child) =>
         React.cloneElement(child, { magnitude }))}
     </FormBlock>
@@ -22,12 +22,14 @@ Form.propTypes = {
     PropTypes.arrayOf(PropTypes.node).isRequired,
   ]),
   maxWidth: PropTypes.number,
+  onSubmit: PropTypes.func,
 };
 
 Form.defaultProps = {
-  children: null,
+  children: undefined,
   magnitude: 'default',
-  maxWidth: null,
+  maxWidth: undefined,
+  onSubmit: undefined,
 };
 
 export { Control, Form, Input, Button, Buttons };

@@ -1,0 +1,1 @@
+export { AuthenticatedNavbar } from './navbar';

@@ -2,10 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider as ReduxProvider } from 'react-redux';
 import { createBrowserHistory } from 'history';
+import { ThemeProvider, theme } from 'theme';
 import './index.css';
 import createStore from './store';
 import App from './App';
-
 import * as serviceWorker from './serviceWorker';
 
 const history = createBrowserHistory();
@@ -14,7 +14,9 @@ const store = createStore(history);
 ReactDOM.render(
   <React.StrictMode>
     <ReduxProvider store={store}>
-      <App history={history} />
+      <ThemeProvider theme={theme}>
+        <App history={history} />
+      </ThemeProvider>
     </ReduxProvider>
   </React.StrictMode>,
   document.getElementById('root')

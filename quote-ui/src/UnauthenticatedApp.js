@@ -5,10 +5,12 @@ import { Switch, Route } from 'react-router-dom';
 import Landing from 'components/landing';
 import Login from 'components/login';
 import Registration from 'components/registration';
+import { UnauthenticatedNavbar } from 'components/unauthenticated-navbar';
 
 const UnauthenticatedApp = ({ history }) => {
   return (
     <ConnectedRouter history={history}>
+      <UnauthenticatedNavbar/>
       <Switch>
         <Route
           exact

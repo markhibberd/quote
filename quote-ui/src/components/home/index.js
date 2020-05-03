@@ -1,35 +1,28 @@
-import React, { useCallback } from 'react';
-import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
-import logout from 'actions/logout';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { get } from 'lodash/fp';
+import fetchFiles from 'actions/fetchFiles';
+import { Loading } from 'components/loading';
 
-const Landing = () => {
+const Home = () => {
   const dispatch = useDispatch();
-  const onLogout = useCallback(
-    () => dispatch(logout()),
-    [dispatch],
-  );
+  const status = useSelector(get(['file', 'status']));
 
+  useEffect(() => {
+    if (status === 'stale') {
+      dispatch(fetchFiles())
+    }
+  }, [dispatch, status]);
+
+  if (status === 'fetching') {
+    return <Loading/>;
+  }
   return (
     <div>
-      <div>
-        <nav>
-          <div>
-            <ul>
-              <li><Link to="/">The Quotefiles</Link></li>
-            </ul>
-          </div>
-          <div>
-            <ul>
-              <li><button type="submit" onClick={onLogout}>Logout</button></li>
-            </ul>
-          </div>
-        </nav>
-      </div>
-      <div>Authenticated Stuff</div>
+          Authenticated Stuff
     </div>
   );
 };
 
 
-export default Landing;
+export default Home;

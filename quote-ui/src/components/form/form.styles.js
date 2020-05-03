@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const FormBlock = styled.div`
+const FormBlock = styled.form`
   ${({ maxWidth }) => maxWidth ? `max-width: ${maxWidth}px;` : ''}
   flex: 1 0 auto;
 `;
@@ -22,7 +22,6 @@ const Buttons = styled.div`
 `;
 
 const Button = styled.button`
-  display: inline-block;
   background-color: ${({ theme, variant }) => ({
     default: '#FFFFFF',
     primary: theme.color.primary,
@@ -51,12 +50,17 @@ const Button = styled.button`
   font-size: ${({ theme, magnitude }) => theme.font.size[magnitude || 'default']};
   font-weight: ${({ theme, magnitude }) => theme.font.weight[magnitude || 'default']};
   font-family: ${({ theme }) => theme.font.family};
-  width: $100%;
   display: ${({ display }) => display || 'inline-block'};
   width: ${({ display }) => ({
     block: '100%',
     'inline-block': 'auto',
   }[display || 'inline-block'])};
+  &:disabled {
+    border-color: #d9d9d9;
+    background-colour: #ffffff;
+    color: #d9d9d9;
+    pointer-events: none;
+  }
 `;
 
 const Input = styled.input`

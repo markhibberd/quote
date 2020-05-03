@@ -1,5 +1,5 @@
 import axios from 'axios';
-import get from 'lodash/fp';
+import { get } from 'lodash/fp';
 
 const withApi = (action) => {
   return (dispatch, getState) => {
