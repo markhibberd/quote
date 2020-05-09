@@ -18,6 +18,9 @@ const FileListMenu = styled.div`
   flex-basis: 48px;
   flex-direction: row;
   align-items: center;
+  padding-left: 8px;
+  padding-right: 8px;
+  border-bottom: 1px solid #e8e8e8;
 `
 
 const FileListSearchBox = styled.input`
@@ -57,7 +60,7 @@ const FileListNew = styled.div`
   display: flex;
   flex-grow: 0;
   flex-shrink: 0;
-  flex-basis: 28px;
+  cursor: pointer;
 `
 
 const FileListItems = styled.div`
@@ -74,12 +77,8 @@ const FileListItem = styled.div`
   align-items: center;
   flex-grow: 0;
   flex-shrink: 0;
-  flex-basis: 80px;
-  border-color: #cccccc;
-  border-width: 1px;
-  border-style: solid;
-  height: 64px;
-  margin-bottom: 12px;
+  flex-basis: 32px;
+  height: 32px;
   padding: 8px;
 `
 
@@ -88,11 +87,29 @@ const FileListName = styled.div`
   flex-shrink: 1;
   flex-basis: auto;
   padding-left: 16px;
-  line-height: ${({ theme }) => theme.font.height.header};
-  font-size: ${({ theme }) => theme.font.size.header};
-  font-weight: ${({ theme }) => theme.font.weight.header};
+  line-height: ${({ theme }) => theme.font.height.default};
+  font-size: ${({ theme }) => theme.font.size.default};
+  font-weight: ${({ theme }) => theme.font.weight.default};
   font-family: ${({ theme }) => theme.font.family};
-  color: ${({ theme }) => theme.color.header};
+  color: ${({ theme }) => theme.color.default};
+`;
+
+const FileListNone = styled.p`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 0;
+  flex-shrink: 0;
+  flex-basis: 32px;
+  height: 32px;
+  padding: 8px;
+  margin: 0;
+  line-height: ${({ theme }) => theme.font.height.default};
+  font-size: ${({ theme }) => theme.font.size.default};
+  font-weight: ${({ theme }) => theme.font.weight.default};
+  font-family: ${({ theme }) => theme.font.family};
+  color: ${({ theme }) => theme.color.default};
 `;
 
 export {
@@ -104,4 +121,5 @@ export {
   FileListItems,
   FileListItem,
   FileListName,
+  FileListNone,
 };

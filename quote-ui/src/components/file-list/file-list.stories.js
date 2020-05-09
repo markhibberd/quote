@@ -3,16 +3,22 @@ import { FileList } from './file-list';
 
 export default { title: 'File list' };
 
-export const Empty = () => <FileList files={[]}/>;
+const onCreate = () =>
+  alert(`Creating new quote`); // eslint-disable-line
+
+export const Empty = () => (
+  <FileList onCreate={onCreate} files={[
+  ]} />
+);
 
 export const Single = () => (
-  <FileList files={[
+  <FileList onCreate={onCreate} files={[
     { id: 1, name: 'Some file' }
   ]} />
 );
 
 export const Multi = () => (
-  <FileList files={[
+  <FileList onCreate={onCreate} files={[
     { id: 1, name: 'Some file' },
     { id: 2, name: 'Some other file' },
   ]} />
