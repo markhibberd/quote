@@ -36,7 +36,7 @@ const Login = ({ loggingIn, onLogin }) => {
           <Input type="password" name="password" value={password} onChange={onPasswordChange} placeholder="Enter your password"/>
         </Control>
         <Buttons>
-          <Button type='submit' disabled={loggingIn} magnitude="header" display="block" variant="primary">Sign in</Button>
+          <Button type="submit" disabled={loggingIn} magnitude="header" display="block" variant="primary">Sign in</Button>
         </Buttons>
       </Form>
     </Layout.Row>

@@ -5,6 +5,20 @@ const FormBlock = styled.form`
   flex: 1 0 auto;
 `;
 
+const InlineFormBlock = styled.form`
+  display: flex;
+  flex-direction: row;
+  ${({ maxWidth }) => maxWidth ? `max-width: ${maxWidth}px;` : ''}
+  flex: 1 0 auto;
+  & > button {
+    margin-left: 16px;
+  }
+  & > :last-of-type {
+    margin-right: 0px;
+  }
+
+`;
+
 // FIX: Needs to be a proper component and pass through 'magnitude';
 const Buttons = styled.div`
   margin-top: 16px;
@@ -42,10 +56,10 @@ const Button = styled.button`
   text-decoration: none;
   text-align: center;
   white-space: nowrap;
-  padding-left: 12px;
-  padding-right: 12px;
-  padding-bottom: 8px;
-  padding-top: 8px;
+  padding-left: 11px;
+  padding-right: 11px;
+  padding-bottom: 7px;
+  padding-top: 7px;
   line-height: ${({ theme, magnitude }) => theme.font.height[magnitude || 'default']};
   font-size: ${({ theme, magnitude }) => theme.font.size[magnitude || 'default']};
   font-weight: ${({ theme, magnitude }) => theme.font.weight[magnitude || 'default']};
@@ -68,9 +82,9 @@ const Input = styled.input`
   outline: 0;
   width: 100%;
   border: 1px solid #d9d9d9;
-  border-radius: 2;
+  border-radius: 2px;
   box-sizing: border-box;
-  padding: 6px 8px;
+  padding: 7px;
   line-height: ${({ theme, magnitude }) => theme.font.height[magnitude || 'default']};
   font-size: ${({ theme, magnitude }) => theme.font.size[magnitude || 'default']};
   font-weight: ${({ theme, magnitude }) => theme.font.weight[magnitude || 'default']};
@@ -80,4 +94,4 @@ const Input = styled.input`
   }
 `;
 
-export { FormBlock, Button, Buttons, Input };
+export { InlineFormBlock, FormBlock, Button, Buttons, Input };

@@ -3,8 +3,8 @@ import { FileList } from './file-list';
 
 export default { title: 'File list' };
 
-const onCreate = () =>
-  alert(`Creating new quote`); // eslint-disable-line
+const onCreate = (name) =>
+  alert(`Creating new quote ${name}`); // eslint-disable-line
 
 export const Empty = () => (
   <FileList onCreate={onCreate} files={[
