@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const FileListContainer = styled.div`
   max-width: 800px;
@@ -82,16 +83,17 @@ const FileListItem = styled.div`
   padding: 8px;
 `
 
-const FileListName = styled.div`
+const FileListName = styled(Link)`
   flex-grow: 1;
   flex-shrink: 1;
   flex-basis: auto;
   padding-left: 16px;
+  text-decoration: none;
+  color: #363636;
   line-height: ${({ theme }) => theme.font.height.default};
   font-size: ${({ theme }) => theme.font.size.default};
   font-weight: ${({ theme }) => theme.font.weight.default};
   font-family: ${({ theme }) => theme.font.family};
-  color: ${({ theme }) => theme.color.default};
 `;
 
 const FileListNone = styled.p`
@@ -109,7 +111,7 @@ const FileListNone = styled.p`
   font-size: ${({ theme }) => theme.font.size.default};
   font-weight: ${({ theme }) => theme.font.weight.default};
   font-family: ${({ theme }) => theme.font.family};
-  color: ${({ theme }) => theme.color.default};
+  color: #363636;
 `;
 
 export {

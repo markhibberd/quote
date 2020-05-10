@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { filter, includes, isEmpty } from 'lodash/fp';
-import { Search, PlusCircle, Book, Share } from 'react-feather';
+import { Search, PlusCircle, Book /*, Share */ } from 'react-feather';
 import { InlineForm, Input, Button } from 'components/form';
 import {
   FileListContainer,
@@ -70,11 +70,13 @@ const FileList = ({ files, onCreate }) => {
         {files.length > 0 && filtered.length === 0 && (
           <FileListNone>No quotefiles matching &ldquo;{search}&rdquo;</FileListNone>
         )}
-        {filtered.length > 0 && filtered.map(({ name }) => (
+        {filtered.length > 0 && filtered.map(({ id, name }) => (
           <FileListItem>
             <Book size={20} strokeWidth={1}/>
-            <FileListName>{name}</FileListName>
+            <FileListName to={`/quotes/${id}`}>{name}</FileListName>
+            {/* TODO: complete sharing modal
             <Share size={20} strokeWidth={1}/>
+            */}
           </FileListItem>
         ))}
       </FileListItems>
