@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 const FileListContainer = styled.div`
   max-width: 800px;
   display: flex;
+  flex: 1 0 auto;
   flex-direction: column;
   line-height: ${({ theme }) => theme.font.height.header};
   font-size: ${({ theme }) => theme.font.size.header};
